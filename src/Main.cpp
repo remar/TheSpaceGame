@@ -4,9 +4,14 @@
 const int screenWidth = 1920;
 const int screenHeight = 1080;
 
-int main() {
+int main(int argc, char *argv[]) {
+  float scale = 1.0f;
+  if(argc > 1) {
+    scale = std::stof(argv[1]);
+  }
+
   SDL_Init(SDL_INIT_VIDEO);
-  Cats::Init(screenWidth, screenHeight, 0.5f);
+  Cats::Init(screenWidth, screenHeight, scale);
   Cats::ShowPointer(false);
   Cats::LoadSprite("../data/gfx/rymdskepp.json");
   Cats::LoadTileset("../data/gfx/bakgrund.json");
