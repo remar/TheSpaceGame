@@ -1,0 +1,16 @@
+{
+    "animations": {
+        "fly": {
+            "image": {
+                 "path":"rymdskepp.png",
+                 "width":80,
+                 "height":40
+             },
+             "origin": [0, 0],
+             "looping": false,
+             "frames": [
+                 [0, 1]
+             ]
+        }
+    }
+}
