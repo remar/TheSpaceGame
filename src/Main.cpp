@@ -1,5 +1,6 @@
 #include "Cats.h"
 #include <SDL.h>
+#include "Rymdskepp.h"
 
 const int screenWidth = 1920;
 const int screenHeight = 1080;
@@ -14,12 +15,12 @@ int main(int argc, char *argv[]) {
   Cats::Init(screenWidth, screenHeight, scale);
   Cats::ShowPointer(false);
   Cats::LoadSprite("../data/gfx/rymdskepp.json");
-  Cats::LoadTileset("../data/gfx/bakgrund.json");
-  Cats::SetupTileLayer(7, 4, 320, 320);
+  Cats::LoadTileset("../data/gfx/bakgrund1.json");
+  Cats::SetupTileLayer(2, 1, screenWidth, screenHeight);
 
-  for(int y = 0;y < 4;y++) {
-    for(int x = 0;x < 7;x++) {
-      Cats::SetTile(x, y, "bakgrund", 0, 0);
+  for(int y = 0;y < 1;y++) {
+    for(int x = 0;x < 2;x++) {
+      Cats::SetTile(x, y, "bakgrund1", 0, 0);
     }
   }
 
@@ -27,7 +28,7 @@ int main(int argc, char *argv[]) {
   bool running = true;
   SDL_Event event;
 
-  int rymdskepp = Cats::CreateSpriteInstance("rymdskepp");
+  Rymdskepp rymdskepp;
   float scroll = 0;
 
   while(running) {
@@ -35,16 +36,16 @@ int main(int argc, char *argv[]) {
       if(event.type == SDL_QUIT) {
         running = false;
       } else if(event.type == SDL_MOUSEMOTION) {
-	Cats::SetSpritePosition(rymdskepp, event.motion.x, event.motion.y);
+	rymdskepp.setPosition(event.motion.x, event.motion.y);
       }
     }
 
     float delta = (SDL_GetTicks() - lastFrameTime) / 1000.0f;
     lastFrameTime = SDL_GetTicks();
 
-    scroll -= delta * 50;
-    while(scroll < -320) {
-      scroll += 320;
+    scroll -= delta * 500;
+    while(scroll < -screenWidth) {
+      scroll += screenWidth;
     }
 
     Cats::SetScroll((int)scroll, 0);

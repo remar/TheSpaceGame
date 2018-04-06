@@ -3,10 +3,10 @@
         "fly": {
             "image": {
                  "path":"rymdskepp.png",
-                 "width":80,
-                 "height":40
+                 "width":120,
+                 "height":60
              },
-             "origin": [0, 0],
+             "origin": [60, 30],
              "looping": false,
              "frames": [
                  [0, 1]
