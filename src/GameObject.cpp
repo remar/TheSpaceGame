@@ -19,7 +19,9 @@ void GameObject::setPosition(float x, float y) {
 inline float square(float x) {return x*x;}
 
 bool GameObject::collides(const GameObject &other) {
-  // Collision if distance^2 < (xdiff^2 + ydiff^2)
-  return square(other.boundingRadius + boundingRadius)
-    < (square(abs(x - other.x)) + square(abs(y - other.y)));
+  // Collision if distance is less than the sum of the radii.
+  // Both sides can be squared to speed up calculation:
+  // x^2+y^2 < (radius1 + radius2)^2
+  return (square(abs(x - other.x)) + square(abs(y - other.y)))
+    < square(other.boundingRadius + boundingRadius);
 }
