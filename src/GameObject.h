@@ -8,7 +8,7 @@
 class GameObject {
 public:
   GameObject(std::string sprite);
-  virtual void update() = 0;
+  virtual void update(float delta) = 0;
   void setBoundingRadius(float radius);
   void setPosition(float x, float y);
   bool collides(const GameObject &other);

@@ -1,6 +1,7 @@
 #include "Cats.h"
 #include <SDL.h>
 #include "Rymdskepp.h"
+#include "Meteorit.h"
 
 const int screenWidth = 1920;
 const int screenHeight = 1080;
@@ -16,6 +17,7 @@ int main(int argc, char *argv[]) {
   Cats::ShowPointer(false);
   Cats::LoadSprite("../data/gfx/rymdskepp.json");
   Cats::LoadSprite("../data/gfx/stor_eld.json");
+  Cats::LoadSprite("../data/gfx/meteorit1.json");
   Cats::LoadTileset("../data/gfx/bakgrund1.json");
   Cats::SetupTileLayer(2, 1, screenWidth, screenHeight);
 
@@ -29,8 +31,11 @@ int main(int argc, char *argv[]) {
   bool running = true;
   SDL_Event event;
 
+  Meteorit meteorit;
   Rymdskepp rymdskepp;
   float scroll = 0;
+
+  meteorit.setPosition(screenWidth/2, screenHeight/2);
 
   while(running) {
     while(SDL_PollEvent(&event)) {
@@ -44,13 +49,18 @@ int main(int argc, char *argv[]) {
     float delta = (SDL_GetTicks() - lastFrameTime) / 1000.0f;
     lastFrameTime = SDL_GetTicks();
 
-    scroll -= delta * 500;
+    scroll -= delta * 150;
     while(scroll < -screenWidth) {
       scroll += screenWidth;
     }
 
-    rymdskepp.update();
+    rymdskepp.update(delta);
+    meteorit.update(delta);
     Cats::SetScroll((int)scroll, 0);
+
+    if(rymdskepp.collides(meteorit)) {
+      meteorit.setPosition(screenWidth, screenHeight/2);
+    }
 
     Cats::Redraw(delta);
   }

@@ -8,7 +8,7 @@
 class Rymdskepp : public GameObject {
 public:
   Rymdskepp();
-  virtual void update();
+  virtual void update(float delta);
 
 private:
   int eld;

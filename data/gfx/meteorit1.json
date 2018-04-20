@@ -1,0 +1,16 @@
+{
+    "animations": {
+        "default": {
+            "image": {
+                 "path":"meteorit1.png",
+                 "width":150,
+                 "height":150
+             },
+             "origin": [75, 75],
+             "looping": false,
+             "frames": [
+                 [0, 1]
+             ]
+        }
+    }
+}
