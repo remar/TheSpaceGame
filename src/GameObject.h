@@ -13,7 +13,7 @@ public:
   void setPosition(float x, float y);
   bool collides(const GameObject &other);
 
-private:
+protected:
   float x;
   float y;
   int spriteId;

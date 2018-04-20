@@ -1,0 +1,16 @@
+{
+    "animations": {
+        "burn": {
+            "image": {
+                 "path":"stor_eld.png",
+                 "width":28,
+                 "height":14
+             },
+             "origin": [28, 7],
+             "looping": true,
+             "frames": [
+                 [0, 100], [1, 100], [2, 100], [3, 100], [4, 100]
+             ]
+        }
+    }
+}

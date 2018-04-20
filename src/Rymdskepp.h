@@ -1,3 +1,5 @@
+// -*- mode: c++ -*-
+
 #ifndef RYMDSKEPP_H
 #define RYMDSKEPP_H
 
@@ -7,6 +9,9 @@ class Rymdskepp : public GameObject {
 public:
   Rymdskepp();
   virtual void update();
+
+private:
+  int eld;
 };
 
 #endif

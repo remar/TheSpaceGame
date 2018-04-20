@@ -1,12 +1,17 @@
 CATSDIR := ../../cats/cats-cpp/src
+CPPFILES := $(wildcard *.cpp)
+DEPFILES := $(patsubst %.cpp,%.d,$(CPPFILES))
 CXXFLAGS += -I${CATSDIR} `sdl2-config --cflags` -std=c++11
+OFILES := $(CPPFILES:.cpp=.o)
 
 
-RymdSpelet: Rymdskepp.o GameObject.o Main.o ${CATSDIR}/libcats.a ${CATSDIR}/Cats.h
+RymdSpelet: ${OFILES}
 	g++ -o $@ $^ -L${CATSDIR} -lcats `sdl2-config --libs` -lSDL2_image
 
-data:
-	(cd ../data/gfx && for i in *.xcf; do xcf2png $$i -o $${i%.xcf}.png; done)
+-include $(DEPFILES)
+
+%.o: %.cpp Makefile
+	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 clean:
-	@rm -f *.o RymdSpelet ../data/gfx/*.png
+	@rm -f *.o RymdSpelet *.d

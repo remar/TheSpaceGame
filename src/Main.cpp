@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
   Cats::Init(screenWidth, screenHeight, scale);
   Cats::ShowPointer(false);
   Cats::LoadSprite("../data/gfx/rymdskepp.json");
+  Cats::LoadSprite("../data/gfx/stor_eld.json");
   Cats::LoadTileset("../data/gfx/bakgrund1.json");
   Cats::SetupTileLayer(2, 1, screenWidth, screenHeight);
 
@@ -48,6 +49,7 @@ int main(int argc, char *argv[]) {
       scroll += screenWidth;
     }
 
+    rymdskepp.update();
     Cats::SetScroll((int)scroll, 0);
 
     Cats::Redraw(delta);
