@@ -1,20 +1,21 @@
 Rymdspelet!
 -----------
 
+Byt till engelska i kodbasen (and in this backlog)
+Vektorer
+Styr med spak/piltangenter
+Byt namn från meteorit till asteroid
+Olika asteroider
 Power-ups: Continue, Extraliv, Manövrering, Sakta ner, Sköld, Supervapen
 Slumpa bakgrund
-Styr med spak/piltangenter
 Småeldar från små motorer
 Rotation av sprites (småeldar)
 Bana
 Banformat
 Baneditor
-Byt namn från meteorit till asteroid
-Olika asteroider
 Meny
 Skjuta skott
 Ljud
-Vektorer
 Omladdningstid för skott
 Mål
 HP för asteroider
