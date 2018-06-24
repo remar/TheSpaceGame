@@ -1,7 +1,7 @@
 #include "Cats.h"
 #include <SDL.h>
-#include "Rymdskepp.h"
-#include "Meteorit.h"
+#include "Spaceship.h"
+#include "Meteorite.h"
 
 const int screenWidth = 1920;
 const int screenHeight = 1080;
@@ -31,18 +31,18 @@ int main(int argc, char *argv[]) {
   bool running = true;
   SDL_Event event;
 
-  Meteorit meteorit;
-  Rymdskepp rymdskepp;
+  Meteorite meteorite;
+  Spaceship spaceship;
   float scroll = 0;
 
-  meteorit.setPosition(screenWidth/2, screenHeight/2);
+  meteorite.setPosition(screenWidth/2, screenHeight/2);
 
   while(running) {
     while(SDL_PollEvent(&event)) {
       if(event.type == SDL_QUIT) {
         running = false;
       } else if(event.type == SDL_MOUSEMOTION) {
-	rymdskepp.setPosition(event.motion.x, event.motion.y);
+	spaceship.setPosition(event.motion.x, event.motion.y);
       }
     }
 
@@ -54,12 +54,12 @@ int main(int argc, char *argv[]) {
       scroll += screenWidth;
     }
 
-    rymdskepp.update(delta);
-    meteorit.update(delta);
+    spaceship.update(delta);
+    meteorite.update(delta);
     Cats::SetScroll((int)scroll, 0);
 
-    if(rymdskepp.collides(meteorit)) {
-      meteorit.setPosition(screenWidth, screenHeight/2);
+    if(spaceship.collides(meteorite)) {
+      meteorite.setPosition(screenWidth, screenHeight/2);
     }
 
     Cats::Redraw(delta);

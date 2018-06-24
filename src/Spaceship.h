@@ -1,17 +1,17 @@
 // -*- mode: c++ -*-
 
-#ifndef RYMDSKEPP_H
-#define RYMDSKEPP_H
+#ifndef SPACESHIP_H
+#define SPACESHIP_H
 
 #include "GameObject.h"
 
-class Rymdskepp : public GameObject {
+class Spaceship : public GameObject {
 public:
-  Rymdskepp();
+  Spaceship();
   virtual void update(float delta);
 
 private:
-  int eld;
+  int fire;
 };
 
 #endif

@@ -1,22 +1,28 @@
 Rymdspelet!
 -----------
 
-Byt till engelska i kodbasen (and in this backlog)
-Vektorer
-Styr med spak/piltangenter
-Byt namn från meteorit till asteroid
-Olika asteroider
-Power-ups: Continue, Extraliv, Manövrering, Sakta ner, Sköld, Supervapen
-Slumpa bakgrund
-Småeldar från små motorer
-Rotation av sprites (småeldar)
-Bana
-Banformat
-Baneditor
-Meny
-Skjuta skott
-Ljud
-Omladdningstid för skott
-Mål
-HP för asteroider
-HP för rymdskeppet
+Vectors
+Control with joystick/arrow keys
+Change name from meteorite to asteroid
+Different asteroids
+Power-ups: Continue, Extra life, Manouvre, Slow down, Shield, Super weapon
+Random background
+Small fires from small engines
+Rotation of sprites (small fires)
+Level
+Level format
+Level editor
+Menu
+Shoot bullets
+Sound
+Reload time for bullets
+Goal
+HP for asteroids
+HP for the space ship
+i18n?
+
+
+Done
+----
+
+Change to english in the code (and in this backlog)
