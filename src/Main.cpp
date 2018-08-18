@@ -1,7 +1,7 @@
 #include "Cats.h"
 #include <SDL.h>
 #include "Spaceship.h"
-#include "Meteorite.h"
+#include "Asteroid.h"
 
 const int screenWidth = 1920;
 const int screenHeight = 1080;
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
   Cats::ShowPointer(false);
   Cats::LoadSprite("../data/gfx/rymdskepp.json");
   Cats::LoadSprite("../data/gfx/stor_eld.json");
-  Cats::LoadSprite("../data/gfx/meteorit1.json");
+  Cats::LoadSprite("../data/gfx/asteroid1.json");
   Cats::LoadTileset("../data/gfx/bakgrund1.json");
   Cats::SetupTileLayer(2, 1, screenWidth, screenHeight);
 
@@ -31,12 +31,12 @@ int main(int argc, char *argv[]) {
   bool running = true;
   SDL_Event event;
 
-  Meteorite meteorite;
+  Asteroid asteroid;
   Spaceship spaceship;
   float scroll = 0;
 
   spaceship.setPosition(screenWidth/2, screenHeight/2);
-  meteorite.setPosition(screenWidth/2, screenHeight/2);
+  asteroid.setPosition(screenWidth/2, screenHeight/2);
   float mouseX = 0, mouseY = 0;
   float dx = 0, dy = 0;
 
@@ -83,11 +83,11 @@ int main(int argc, char *argv[]) {
     }
 
     spaceship.update(delta);
-    meteorite.update(delta);
+    asteroid.update(delta);
     Cats::SetScroll((int)scroll, 0);
 
-    if(spaceship.collides(meteorite)) {
-      meteorite.setPosition(screenWidth, screenHeight/2);
+    if(spaceship.collides(asteroid)) {
+      asteroid.setPosition(screenWidth, screenHeight/2);
     }
 
     Cats::Redraw(delta);

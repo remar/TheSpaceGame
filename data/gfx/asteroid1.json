@@ -2,7 +2,7 @@
     "animations": {
         "default": {
             "image": {
-                 "path":"meteorit1.png",
+                 "path":"asteroid1.png",
                  "width":150,
                  "height":150
              },

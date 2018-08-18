@@ -1,13 +1,13 @@
 // -*- mode: c++ -*-
 
-#ifndef METEORITE_H
-#define METEORITE_H
+#ifndef ASTEROID_H
+#define ASTEROID_H
 
 #include "GameObject.h"
 
-class Meteorite : public GameObject {
+class Asteroid : public GameObject {
 public:
-  Meteorite();
+  Asteroid();
   virtual void update(float delta);
 };
 
