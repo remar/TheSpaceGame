@@ -35,16 +35,44 @@ int main(int argc, char *argv[]) {
   Spaceship spaceship;
   float scroll = 0;
 
+  spaceship.setPosition(screenWidth/2, screenHeight/2);
   meteorite.setPosition(screenWidth/2, screenHeight/2);
+  float mouseX = 0, mouseY = 0;
+  float dx = 0, dy = 0;
 
   while(running) {
     while(SDL_PollEvent(&event)) {
       if(event.type == SDL_QUIT) {
         running = false;
       } else if(event.type == SDL_MOUSEMOTION) {
-	spaceship.setPosition(event.motion.x, event.motion.y);
+	mouseX = event.motion.x;
+	mouseY = event.motion.y;
+      } else if(event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+	switch(event.key.keysym.sym) {
+	case SDLK_UP:    dy -= 1; break;
+	case SDLK_DOWN:  dy += 1; break;
+	case SDLK_LEFT:  dx -= 1; break;
+	case SDLK_RIGHT: dx += 1; break;
+	case SDLK_ESCAPE:
+	  running = false;
+	  break;
+	}
+      } else if(event.type == SDL_KEYUP) {
+	switch(event.key.keysym.sym) {
+	case SDLK_UP:
+	  dy += 1;
+	  break;
+	case SDLK_DOWN:
+	  dy -= 1;
+	  break;
+	case SDLK_LEFT:  dx += 1; break;
+	case SDLK_RIGHT: dx -= 1; break;
+	}
       }
     }
+
+    spaceship.setDirection(dx, dy);
+    //spaceship.moveToward(mouseX, mouseY);
 
     float delta = (SDL_GetTicks() - lastFrameTime) / 1000.0f;
     lastFrameTime = SDL_GetTicks();

@@ -5,7 +5,7 @@ CXXFLAGS += -I${CATSDIR} `sdl2-config --cflags` -std=c++11
 OFILES := $(CPPFILES:.cpp=.o)
 
 
-RymdSpelet: ${OFILES}
+TheSpaceGame: ${OFILES}
 	g++ -o $@ $^ -L${CATSDIR} -lcats `sdl2-config --libs` -lSDL2_image
 
 -include $(DEPFILES)
@@ -14,4 +14,4 @@ RymdSpelet: ${OFILES}
 	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 clean:
-	@rm -f *.o RymdSpelet *.d
+	@rm -f *.o TheSpaceGame *.d

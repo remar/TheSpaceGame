@@ -25,3 +25,14 @@ bool GameObject::collides(const GameObject &other) {
   return (square(abs(x - other.x)) + square(abs(y - other.y)))
     < square(other.boundingRadius + boundingRadius);
 }
+
+void GameObject::setDirection(float dx, float dy) {
+  direction.set(dx, dy);
+  direction.normalize();
+}
+
+void GameObject::moveInDirection(float delta, float speed) {
+  this->x += direction.x * delta * speed;
+  this->y += direction.y * delta * speed;
+  Cats::SetSpritePosition(spriteId, x, y);
+}

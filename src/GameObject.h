@@ -4,6 +4,7 @@
 #define GAME_OBJECT_H
 
 #include <string>
+#include "Vector.h"
 
 class GameObject {
 public:
@@ -12,12 +13,15 @@ public:
   void setBoundingRadius(float radius);
   void setPosition(float x, float y);
   bool collides(const GameObject &other);
+  void setDirection(float dx, float dy);
+  void moveInDirection(float delta, float speed);
 
 protected:
   float x;
   float y;
   int spriteId;
   float boundingRadius;
+  Vector direction;
 };
 
 #endif

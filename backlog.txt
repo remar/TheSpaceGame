@@ -1,8 +1,7 @@
 Rymdspelet!
 -----------
 
-Vectors
-Control with joystick/arrow keys
+Control with joystick
 Change name from meteorite to asteroid
 Different asteroids
 Power-ups: Continue, Extra life, Manouvre, Slow down, Shield, Super weapon
@@ -25,4 +24,6 @@ i18n?
 Done
 ----
 
+Control with arrow keys
+Vectors
 Change to english in the code (and in this backlog)
