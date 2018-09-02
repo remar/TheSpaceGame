@@ -1,7 +1,8 @@
 #include "Cats.h"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include "Spaceship.h"
 #include "Asteroid.h"
+#include "Input.h"
 
 const int screenWidth = 1920;
 const int screenHeight = 1080;
@@ -13,12 +14,18 @@ int main(int argc, char *argv[]) {
   }
 
   SDL_Init(SDL_INIT_VIDEO);
+
+  Input input;
+
   Cats::Init(screenWidth, screenHeight, scale);
   Cats::ShowPointer(false);
+
+  // Read in resources
   Cats::LoadSprite("../data/gfx/rymdskepp.json");
   Cats::LoadSprite("../data/gfx/stor_eld.json");
   Cats::LoadSprite("../data/gfx/asteroid1.json");
   Cats::LoadTileset("../data/gfx/bakgrund1.json");
+
   Cats::SetupTileLayer(2, 1, screenWidth, screenHeight);
 
   for(int y = 0;y < 1;y++) {
@@ -29,7 +36,6 @@ int main(int argc, char *argv[]) {
 
   int lastFrameTime = SDL_GetTicks();
   bool running = true;
-  SDL_Event event;
 
   Asteroid asteroid;
   Spaceship spaceship;
@@ -37,42 +43,16 @@ int main(int argc, char *argv[]) {
 
   spaceship.setPosition(screenWidth/2, screenHeight/2);
   asteroid.setPosition(screenWidth/2, screenHeight/2);
-  float mouseX = 0, mouseY = 0;
-  float dx = 0, dy = 0;
 
   while(running) {
-    while(SDL_PollEvent(&event)) {
-      if(event.type == SDL_QUIT) {
-        running = false;
-      } else if(event.type == SDL_MOUSEMOTION) {
-	mouseX = event.motion.x;
-	mouseY = event.motion.y;
-      } else if(event.type == SDL_KEYDOWN && event.key.repeat == 0) {
-	switch(event.key.keysym.sym) {
-	case SDLK_UP:    dy -= 1; break;
-	case SDLK_DOWN:  dy += 1; break;
-	case SDLK_LEFT:  dx -= 1; break;
-	case SDLK_RIGHT: dx += 1; break;
-	case SDLK_ESCAPE:
-	  running = false;
-	  break;
-	}
-      } else if(event.type == SDL_KEYUP) {
-	switch(event.key.keysym.sym) {
-	case SDLK_UP:
-	  dy += 1;
-	  break;
-	case SDLK_DOWN:
-	  dy -= 1;
-	  break;
-	case SDLK_LEFT:  dx += 1; break;
-	case SDLK_RIGHT: dx -= 1; break;
-	}
-      }
-    }
+    // Read input
+    input.update();
 
-    spaceship.setDirection(dx, dy);
-    //spaceship.moveToward(mouseX, mouseY);
+
+    // Game logic
+    running = !input.gotQuitEvent();
+
+    spaceship.setDirection(input.getDirection());
 
     float delta = (SDL_GetTicks() - lastFrameTime) / 1000.0f;
     lastFrameTime = SDL_GetTicks();
@@ -84,12 +64,15 @@ int main(int argc, char *argv[]) {
 
     spaceship.update(delta);
     asteroid.update(delta);
-    Cats::SetScroll((int)scroll, 0);
 
     if(spaceship.collides(asteroid)) {
       asteroid.setPosition(screenWidth, screenHeight/2);
     }
 
+    Cats::SetScroll((int)scroll, 0);
+
+
+    // Render
     Cats::Redraw(delta);
   }
 

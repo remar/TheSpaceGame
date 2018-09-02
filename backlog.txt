@@ -1,14 +1,14 @@
 Rymdspelet!
 -----------
 
+Level
+Screens
 Control with joystick
-Change name from meteorite to asteroid
 Different asteroids
 Power-ups: Continue, Extra life, Manouvre, Slow down, Shield, Super weapon
 Random background
 Small fires from small engines
 Rotation of sprites (small fires)
-Level
 Level format
 Level editor
 Menu
@@ -24,6 +24,8 @@ i18n?
 Done
 ----
 
+Input abstraction
+Change name from meteorite to asteroid
 Control with arrow keys
 Vectors
 Change to english in the code (and in this backlog)
