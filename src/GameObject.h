@@ -14,6 +14,7 @@ public:
   void setPosition(float x, float y);
   bool collides(const GameObject &other);
   void setDirection(float dx, float dy);
+  void setDirection(Vector v);
   void moveInDirection(float delta, float speed);
 
 protected:

@@ -31,6 +31,11 @@ void GameObject::setDirection(float dx, float dy) {
   direction.normalize();
 }
 
+void GameObject::setDirection(Vector v) {
+  direction = v;
+  direction.normalize();
+}
+
 void GameObject::moveInDirection(float delta, float speed) {
   this->x += direction.x * delta * speed;
   this->y += direction.y * delta * speed;
