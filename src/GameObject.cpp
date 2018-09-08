@@ -18,12 +18,12 @@ void GameObject::setPosition(float x, float y) {
 
 inline float square(float x) {return x*x;}
 
-bool GameObject::collides(const GameObject &other) {
+bool GameObject::collides(const GameObject *other) {
   // Collision if distance is less than the sum of the radii.
   // Both sides can be squared to speed up calculation:
   // x^2+y^2 < (radius1 + radius2)^2
-  return (square(abs(x - other.x)) + square(abs(y - other.y)))
-    < square(other.boundingRadius + boundingRadius);
+  return (square(abs(x - other->x)) + square(abs(y - other->y)))
+    < square(other->boundingRadius + boundingRadius);
 }
 
 void GameObject::setDirection(float dx, float dy) {

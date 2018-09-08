@@ -1,11 +1,9 @@
 #include "Cats.h"
 #include <SDL2/SDL.h>
-#include "Spaceship.h"
-#include "Asteroid.h"
 #include "Input.h"
-
-const int screenWidth = 1920;
-const int screenHeight = 1080;
+#include "GameLogic.h"
+#include "Constants.h"
+#include "LevelState.h"
 
 int main(int argc, char *argv[]) {
   float scale = 1.0f;
@@ -14,8 +12,6 @@ int main(int argc, char *argv[]) {
   }
 
   SDL_Init(SDL_INIT_VIDEO);
-
-  Input input;
 
   Cats::Init(screenWidth, screenHeight, scale);
   Cats::ShowPointer(false);
@@ -37,39 +33,22 @@ int main(int argc, char *argv[]) {
   int lastFrameTime = SDL_GetTicks();
   bool running = true;
 
-  Asteroid asteroid;
-  Spaceship spaceship;
-  float scroll = 0;
+  GameLogic gameLogic;
 
-  spaceship.setPosition(screenWidth/2, screenHeight/2);
-  asteroid.setPosition(screenWidth/2, screenHeight/2);
+  gameLogic.ChangeState(LevelState::Instance());
 
   while(running) {
     // Read input
-    input.update();
+    Input::Instance()->update();
 
 
     // Game logic
-    running = !input.gotQuitEvent();
-
-    spaceship.setDirection(input.getDirection());
+    running = !Input::Instance()->gotQuitEvent();
 
     float delta = (SDL_GetTicks() - lastFrameTime) / 1000.0f;
     lastFrameTime = SDL_GetTicks();
 
-    scroll -= delta * 150;
-    while(scroll < -screenWidth) {
-      scroll += screenWidth;
-    }
-
-    spaceship.update(delta);
-    asteroid.update(delta);
-
-    if(spaceship.collides(asteroid)) {
-      asteroid.setPosition(screenWidth, screenHeight/2);
-    }
-
-    Cats::SetScroll((int)scroll, 0);
+    gameLogic.Update(delta);
 
 
     // Render

@@ -1,6 +1,8 @@
 #include "Input.h"
 #include <SDL2/SDL.h>
 
+Input Input::instance;
+
 Input::Input() : dx(0), dy(0), quitEvent(false) {}
 
 void Input::update() {
