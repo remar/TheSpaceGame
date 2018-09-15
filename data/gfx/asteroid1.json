@@ -3,10 +3,10 @@
         "default": {
             "image": {
                  "path":"asteroid1.png",
-                 "width":150,
-                 "height":150
+                 "width":400,
+                 "height":400
              },
-             "origin": [75, 75],
+             "origin": [200, 200],
              "looping": false,
              "frames": [
                  [0, 1]
