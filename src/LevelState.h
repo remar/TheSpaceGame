@@ -1,9 +1,13 @@
+// -*- mode: c++ -*-
+
 #ifndef LEVELSTATE_H
 #define LEVELSTATE_H
 
 #include "GameState.h"
 #include "Asteroid.h"
 #include "Spaceship.h"
+#include "ObjectSpec.h"
+#include <list>
 
 class LevelState : public GameState {
 public:
@@ -15,9 +19,12 @@ public:
 
 private:
   static LevelState instance;
-  Asteroid *asteroid;
+
   Spaceship *spaceship;
-  float scroll;
+  float backgroundScroll;
+  float levelScroll;
+  std::list<Asteroid *> asteroids;
+  std::list<ObjectSpec> objectQueue;
 };
 
 #endif

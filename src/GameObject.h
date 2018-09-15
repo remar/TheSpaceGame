@@ -12,6 +12,8 @@ public:
   virtual void update(float delta) = 0;
   void setBoundingRadius(float radius);
   void setPosition(float x, float y);
+  float getXPosition() { return x; }
+  float getYPosition() { return y; }
   bool collides(const GameObject *other);
   void setDirection(float dx, float dy);
   void setDirection(Vector v);

@@ -6,33 +6,39 @@
 LevelState LevelState::instance;
 
 void LevelState::EnterState() {
-  scroll = 0;
+  backgroundScroll = 0;
+  levelScroll = 0;
   spaceship = new Spaceship();
-  asteroid = new Asteroid();
   spaceship->setPosition(screenWidth/2, screenHeight/2);
-  asteroid->setPosition(screenWidth/2, screenHeight/2);
+  for(int i = 0;i < 10;i++) {
+    Asteroid *asteroid = new Asteroid();
+    asteroid->setPosition(screenWidth + 200, i * (screenHeight/11) + screenHeight/11);
+    asteroids.push_back(asteroid);
+  }
 }
 
 void LevelState::ExitState() {
   delete spaceship;
-  delete asteroid;
+  for(auto asteroid : asteroids) {
+    delete asteroid;
+  }
 }
 
 void LevelState::Update(GameLogic *gameLogic, float delta) {
     spaceship->setDirection(Input::Instance()->getDirection());
 
-    scroll -= delta * 150;
-    while(scroll < -screenWidth) {
-      scroll += screenWidth;
+    backgroundScroll -= delta * 150;
+    while(backgroundScroll < -screenWidth) {
+      backgroundScroll += screenWidth;
     }
 
     spaceship->update(delta);
-    asteroid->update(delta);
-
-    if(spaceship->collides(asteroid)) {
-      asteroid->setPosition(screenWidth, screenHeight/2);
+    for(auto a : asteroids) {
+      if(a->collides(spaceship)) {
+	a->setPosition(screenWidth + 200, a->getYPosition());
+      }
+      a->update(delta);
     }
 
-    Cats::SetScroll((int)scroll, 0);
+    Cats::SetScroll((int)backgroundScroll, 0);
 }
-
