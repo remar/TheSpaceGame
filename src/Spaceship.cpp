@@ -9,7 +9,7 @@ Spaceship::Spaceship() : GameObject("rymdskepp") {
 }
 
 void Spaceship::update(float delta) {
-  setPosition(x + direction.x * delta * 300, y + direction.y * delta * 300);
+  moveInDirection(delta, 300);
   Cats::SetSpritePosition(fire, x - 60, y);
 }
 
