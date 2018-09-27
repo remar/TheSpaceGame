@@ -10,15 +10,20 @@ Spaceship::Spaceship() : GameObject("rymdskepp") {
 
 void Spaceship::update(float delta) {
   moveInDirection(delta, 300);
-  Cats::SetSpritePosition(fire, x - 60, y);
+
+  // Follow camera (camera moves 200 pixels to the right each second)
+  direction.set(1, 0);
+  moveInDirection(delta, 200);
+
+  Cats::SetSpritePosition(fire, getScreenXPosition() - 60, getScreenYPosition());
 }
 
-void Spaceship::moveToward(float x, float y) {
+void Spaceship::moveToward(float worldX, float worldY) {
   float epsilon = 1.0f;
-  if(std::abs(x - this->x) < epsilon && std::abs(y - this->y) < epsilon) {
+  if(std::abs(worldX - this->worldX) < epsilon && std::abs(worldY - this->worldY) < epsilon) {
     direction.set(0, 0);
   } else {
-    direction.set(x - this->x, y - this->y);
+    direction.set(worldX - this->worldX, worldY - this->worldY);
   }
   direction.normalize();
 }

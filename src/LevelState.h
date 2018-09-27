@@ -23,6 +23,8 @@ private:
   Spaceship *spaceship;
   float backgroundScroll;
   float levelScroll;
+  const float leftOfScreenOffset = -300;
+  const float rightOfScreenOffset = 500;
   std::list<Asteroid *> asteroids;
   std::list<ObjectSpec> objectQueue;
 };
