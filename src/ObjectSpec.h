@@ -5,10 +5,19 @@
 
 #include <iostream>
 
+enum ObjectType {
+  SMALL_ASTEROID,
+  MEDIUM_ASTEROID,
+  LARGE_ASTEROID,
+  EXTRA_LIFE
+};
+
 class ObjectSpec {
 public:
   float x, y;
-  ObjectSpec(float x, float y) : x(x), y(y) {}
+  ObjectType objectType;
+
+  ObjectSpec(float x, float y, ObjectType objectType) : x(x), y(y), objectType(objectType) {}
   bool operator <(const ObjectSpec &spec) { return x < spec.x; }
 };
 

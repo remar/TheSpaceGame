@@ -9,6 +9,7 @@
 class GameObject {
 public:
   GameObject(std::string sprite);
+  ~GameObject() { destroy(); }
   virtual void update(float delta) = 0;
   void setBoundingRadius(float radius);
   void setWorldPosition(float worldX, float worldY);
@@ -21,6 +22,8 @@ public:
   void setDirection(float dx, float dy);
   void setDirection(Vector v);
   void moveInDirection(float delta, float speed);
+  virtual void destroy();
+  bool isBeingDestroyed() { return toBeDestroyed; }
 
 protected:
   void updateGraphicsPosition();
@@ -31,6 +34,7 @@ protected:
   int spriteId;
   float boundingRadius;
   Vector direction;
+  bool toBeDestroyed;
 };
 
 #endif

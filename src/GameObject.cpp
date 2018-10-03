@@ -8,6 +8,7 @@ GameObject::GameObject(std::string sprite) {
   worldY = 0;
   cameraX = 0;
   cameraY = 0;
+  toBeDestroyed = false;
 }
 
 void GameObject::setBoundingRadius(float radius) {
@@ -50,6 +51,11 @@ void GameObject::moveInDirection(float delta, float speed) {
   this->worldX += direction.x * delta * speed;
   this->worldY += direction.y * delta * speed;
   updateGraphicsPosition();
+}
+
+void GameObject::destroy() {
+  Cats::RemoveSpriteInstance(spriteId);
+  toBeDestroyed = true;
 }
 
 void GameObject::updateGraphicsPosition() {
