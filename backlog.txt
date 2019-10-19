@@ -1,7 +1,7 @@
 Rymdspelet!
 -----------
 
-Level
+Level editor
 Screens
 Control with joystick
 Different asteroids
@@ -9,8 +9,6 @@ Power-ups: Continue, Extra life, Manouvre, Slow down, Shield, Super weapon
 Random background
 Small fires from small engines
 Rotation of sprites (small fires)
-Level format
-Level editor
 Menu
 Shoot bullets
 Sound

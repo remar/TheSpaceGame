@@ -12,12 +12,11 @@ public:
   Vector getDirection();
   bool gotQuitEvent();
 
-  static Input* Instance() { return &instance; }
+  static Input instance;
 
 private:
   float dx, dy;
   bool quitEvent;
-  static Input instance;
 };
 
 #endif

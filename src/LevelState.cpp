@@ -3,6 +3,9 @@
 #include "Input.h"
 #include "Cats.h"
 #include <iostream>
+#include <string>
+#include "Util.h"
+#include <cstring>
 
 LevelState LevelState::instance;
 
@@ -10,12 +13,9 @@ void LevelState::EnterState() {
   backgroundScroll = 0;
   levelScroll = 0;
   spaceship = new Spaceship();
-  spaceship->setWorldPosition(screenWidth/2, 100);
+  spaceship->setWorldPosition(screenWidth/2, screenHeight/2);
 
-  // Create dummy level
-  for(int i = 0;i < 100;i++) {
-    objectQueue.push_back(ObjectSpec(i*screenWidth/10, (i*screenHeight/10)%screenHeight, LARGE_ASTEROID));
-  }
+  LoadLevel("../data/levels/" + level);
 }
 
 void LevelState::ExitState() {
@@ -34,7 +34,7 @@ void LevelState::Update(GameLogic *gameLogic, float delta) {
     objectQueue.pop_front();
   }
 
-  spaceship->setDirection(Input::Instance()->getDirection());
+  spaceship->setDirection(Input::instance.getDirection());
 
   // Gfx
   levelScroll += delta * 200;
@@ -59,6 +59,7 @@ void LevelState::Update(GameLogic *gameLogic, float delta) {
   auto it = asteroids.begin();
   while(it != asteroids.end()) {
     if((*it)->isBeingDestroyed()) {
+      std::cout << "Destroying object" << std::endl;
       it = asteroids.erase(it);
     } else {
       it++;
@@ -66,6 +67,72 @@ void LevelState::Update(GameLogic *gameLogic, float delta) {
   }
 
   Cats::SetScroll((int)backgroundScroll, 0);
+}
+
+void LevelState::LoadLevel(std::string path) {
+  std::cout << "Loading level \"" << path << "\"" << std::endl;
+
+  char *jsontext = strdup(ReadFile(path).c_str());
+
+  char *endptr;
+  JsonValue value;
+  JsonAllocator allocator;
+
+  if(jsonParse(jsontext, &endptr, &value, allocator) != JSON_OK) {
+    throw std::runtime_error("Unable to parse " + path);
+  }
+
+  JsonNode* node = value.toNode();
+
+  if(strcmp(node->key, "objects") != 0) {
+    throw std::runtime_error("Object doesn't have \"objects\" key! (" + path + ")");
+  }
+
+  value = node->value;
+
+  // Loop through the objects in the array
+  for(auto obj : value) {
+    objectQueue.push_back(ReadObject(obj->value, path));
+  }
+
+  free(jsontext);
+
+  objectQueue.sort();
+}
+
+
+ObjectSpec LevelState::ReadObject(JsonValue value, std::string path) {
+    bool gotX = false;
+    int x = 0;
+    bool gotY = false;
+    int y = 0;
+    bool gotType = false;
+    ObjectType type = ObjectType::SMALL_ASTEROID;
+    for(auto elm : value) {
+      if(strcmp(elm->key, "x") == 0) {
+	gotX = true;
+	x = (elm->value).toNumber();
+      } else if(strcmp(elm->key, "y") == 0) {
+	gotY = true;
+	y = (elm->value).toNumber();
+      } else if(strcmp(elm->key, "type") == 0) {
+	gotType = true;
+	char *t = (elm->value).toString();
+	if(strcmp(t, "small asteroid") == 0) {
+	  type = ObjectType::SMALL_ASTEROID;
+	} else if(strcmp(t, "medium asteroid") == 0) {
+	  type = ObjectType::MEDIUM_ASTEROID;
+	} else if(strcmp(t, "large asteroid") == 0) {
+	  type = ObjectType::LARGE_ASTEROID;
+	} else if(strcmp(t, "extra life") == 0) {
+	  type = ObjectType::EXTRA_LIFE;
+	}
+      }
+    }
+    if(!gotX || !gotY || !gotType) {
+      throw std::runtime_error("Incomplete object specification in " + path);
+    }
+    return ObjectSpec(x, y, type);
 }
 
 void LevelState::CreateAsteroidAt(float x, float y, ObjectType type) {

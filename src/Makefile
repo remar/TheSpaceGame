@@ -1,17 +1,18 @@
+SDL2CONFIG := sdl2-config
 CATSDIR := ../../cats/cats-cpp/src
 CPPFILES := $(wildcard *.cpp)
 DEPFILES := $(patsubst %.cpp,%.d,$(CPPFILES))
-CXXFLAGS += -I${CATSDIR} `sdl2-config --cflags` -std=c++11
+CXXFLAGS += -I${CATSDIR} `$(SDL2CONFIG) --cflags` -std=c++11
 OFILES := $(CPPFILES:.cpp=.o)
 
 
 TheSpaceGame: ${OFILES}
-	g++ -o $@ $^ -L${CATSDIR} -lcats `sdl2-config --libs` -lSDL2_image
+	$(CXX) -o $@ $^ -L${CATSDIR} -lcats `$(SDL2CONFIG) --libs` -lSDL2_image
 
 -include $(DEPFILES)
 
 %.o: %.cpp Makefile
-	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 clean:
 	@rm -f *.o TheSpaceGame *.d

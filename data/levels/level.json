@@ -1,0 +1,14 @@
+{
+    "objects": [
+	{
+	    "x": 3000,
+	    "y": 543,
+	    "type": "small asteroid"
+	},
+	{
+	    "x": 2500,
+	    "y": 123,
+	    "type": "extra life"
+	}
+    ]
+}

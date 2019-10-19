@@ -35,15 +35,16 @@ int main(int argc, char *argv[]) {
 
   GameLogic gameLogic;
 
-  gameLogic.ChangeState(LevelState::Instance());
+  LevelState::instance.SetLevel("level.json");
+  gameLogic.ChangeState(&LevelState::instance);
 
   while(running) {
     // Read input
-    Input::Instance()->update();
+    Input::instance.update();
 
 
     // Game logic
-    running = !Input::Instance()->gotQuitEvent();
+    running = !Input::instance.gotQuitEvent();
 
     float delta = (SDL_GetTicks() - lastFrameTime) / 1000.0f;
     lastFrameTime = SDL_GetTicks();

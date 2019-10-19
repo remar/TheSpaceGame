@@ -1,6 +1,5 @@
 #include "Spaceship.h"
 #include "Cats.h"
-#include <cmath>
 
 Spaceship::Spaceship() : GameObject("rymdskepp") {
   fire = Cats::CreateSpriteInstance("stor_eld");
