@@ -36,6 +36,8 @@ void LevelState::ExitState() {
 void LevelState::Update(GameLogic *gameLogic, float delta) {
   if(editingLevel) {
     spaceship->show(false);
+    levelScroll += Input::instance.getDirection().x;
+    SetCameraPosition(levelScroll, 0);
     // Do level editor stuff
     if(Input::instance.pressed(SDLK_e)) {
       editingLevel = false;
