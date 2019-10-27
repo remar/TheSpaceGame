@@ -2,11 +2,12 @@
 #include <iostream>
 #include "FileDialog.h"
 #include "Input.h"
+#include "Cats.h"
 
 EditorState EditorState::instance;
 
 void EditorState::EnterState() {
-  
+  Cats::ShowPointer(true);
 }
 
 void EditorState::ExitState() {
