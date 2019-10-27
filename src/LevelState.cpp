@@ -13,6 +13,8 @@
 LevelState LevelState::instance;
 
 void LevelState::EnterState() {
+  editingLevel = false;
+
   spaceship = new Spaceship();
 
   std::string selected_file = ChooseFile();
@@ -20,6 +22,8 @@ void LevelState::EnterState() {
   std::cout << "Selected file: " << selected_file << std::endl;
 
   LoadLevel("../data/levels/" + level);
+
+  StartLevel();
 }
 
 void LevelState::ExitState() {
@@ -30,47 +34,57 @@ void LevelState::ExitState() {
 }
 
 void LevelState::Update(GameLogic *gameLogic, float delta) {
-  // Spawn new objects
-  while(!objectQueue.empty() && objectQueue.front().x < levelScroll + rightOfScreenOffset) {
-    ObjectSpec spec = objectQueue.front();
-    std::cout << "Spawning " << spec << std::endl;
-    CreateAsteroidAt(spec.x, spec.y, spec.objectType);
-    objectQueue.pop_front();
-  }
-
-  spaceship->setDirection(Input::instance.getDirection());
-
-  // Gfx
-  levelScroll += delta * 200;
-  for(auto a : asteroids) {
-    a->setCameraPosition(levelScroll, 0);
-  }
-  spaceship->setCameraPosition(levelScroll, 0);
-
-  backgroundScroll -= delta * 150;
-  while(backgroundScroll < -screenWidth) {
-    backgroundScroll += screenWidth;
-  }
-
-  spaceship->update(delta);
-  for(auto a : asteroids) {
-    a->update(delta);
-    if(a->collides(spaceship) || a->getWorldXPosition() < levelScroll + leftOfScreenOffset) {
-      a->destroy();
+  if(editingLevel) {
+    spaceship->show(false);
+    // Do level editor stuff
+    if(Input::instance.pressed(SDLK_e)) {
+      editingLevel = false;
+      StartLevel();
     }
-  }
-
-  auto it = asteroids.begin();
-  while(it != asteroids.end()) {
-    if((*it)->isBeingDestroyed()) {
-      std::cout << "Destroying object" << std::endl;
-      it = asteroids.erase(it);
-    } else {
-      it++;
+  } else {
+    // Spawn new objects
+    while(!objectQueue.empty() && objectQueue.front().x < levelScroll + rightOfScreenOffset) {
+      ObjectSpec spec = objectQueue.front();
+      std::cout << "Spawning " << spec << std::endl;
+      CreateAsteroidAt(spec.x, spec.y, spec.objectType);
+      objectQueue.pop_front();
     }
-  }
 
-  Cats::SetScroll((int)backgroundScroll, 0);
+    if(Input::instance.pressed(SDLK_e)) {
+      editingLevel = true;
+    }
+
+    spaceship->setDirection(Input::instance.getDirection());
+
+    // Gfx
+    levelScroll += delta * 200;
+    SetCameraPosition(levelScroll, 0);
+
+    backgroundScroll -= delta * 150;
+    while(backgroundScroll < -screenWidth) {
+      backgroundScroll += screenWidth;
+    }
+
+    spaceship->update(delta);
+    for(auto a : asteroids) {
+      a->update(delta);
+      if(a->collides(spaceship) || a->getWorldXPosition() < levelScroll + leftOfScreenOffset) {
+	a->destroy();
+      }
+    }
+
+    auto it = asteroids.begin();
+    while(it != asteroids.end()) {
+      if((*it)->isBeingDestroyed()) {
+	std::cout << "Destroying object" << std::endl;
+	it = asteroids.erase(it);
+      } else {
+	it++;
+      }
+    }
+
+    Cats::SetScroll((int)backgroundScroll, 0);
+  }
 }
 
 void LevelState::LoadLevel(std::string path) {
@@ -94,20 +108,25 @@ void LevelState::LoadLevel(std::string path) {
 
   value = node->value;
 
+  originalObjectQueue.clear();
+
   // Loop through the objects in the array
   for(auto obj : value) {
-    objectQueue.push_back(ReadObject(obj->value, path));
+    originalObjectQueue.push_back(ReadObject(obj->value, path));
   }
 
   free(jsontext);
 
-  objectQueue.sort();
+  originalObjectQueue.sort();
+}
 
+void LevelState::StartLevel() {
+  objectQueue = originalObjectQueue;
   backgroundScroll = 0;
   levelScroll = 0;
   spaceship->setWorldPosition(screenWidth/2, screenHeight/2);
+  spaceship->show(true);
 }
-
 
 ObjectSpec LevelState::ReadObject(JsonValue value, std::string path) {
     bool gotX = false;
@@ -147,4 +166,11 @@ void LevelState::CreateAsteroidAt(float x, float y, ObjectType type) {
     Asteroid *asteroid = new Asteroid();
     asteroid->setWorldPosition(x, y);
     asteroids.push_back(asteroid);
+}
+
+void LevelState::SetCameraPosition(float x, float y) {
+    for(auto a : asteroids) {
+      a->setCameraPosition(x, y);
+    }
+    spaceship->setCameraPosition(x, y);
 }

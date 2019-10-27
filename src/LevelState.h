@@ -23,8 +23,12 @@ public:
 
 private:
   void LoadLevel(std::string path);
+  void StartLevel();
   ObjectSpec ReadObject(JsonValue value, std::string path);
   void CreateAsteroidAt(float x, float y, ObjectType type);
+  void SetCameraPosition(float x, float y);
+
+  bool editingLevel;
 
   Spaceship *spaceship;
   float backgroundScroll;
@@ -33,6 +37,7 @@ private:
   const float rightOfScreenOffset = screenWidth + 500;
   std::list<Asteroid *> asteroids;
   std::list<ObjectSpec> objectQueue;
+  std::list<ObjectSpec> originalObjectQueue;
   std::string level;
 };
 
