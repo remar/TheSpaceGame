@@ -14,6 +14,7 @@ std::string ChooseFile() {
   // LINUX FILE DIALOG
   
   gtk_init_check(NULL, NULL);
+  char *outPath = 0;
   GtkWidget* dialog = gtk_file_chooser_dialog_new("Open File",
 						  NULL,
 						  GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -27,17 +28,14 @@ std::string ChooseFile() {
 	
     {
       size_t len = strlen(filename);
-      char *outPath = new char[len+1];// NFDi_Malloc( len + 1 );
+      outPath = new char[len+1];
       memcpy( outPath, filename, len + 1 );
       if ( !*outPath )
 	{
 	  g_free( filename );
 	  gtk_widget_destroy(dialog);
-	  //	  return NFD_ERROR;
 	  return "";
 	}
-      std::cout << outPath << std::endl;
-  
     }
     g_free( filename );
   }
@@ -47,7 +45,7 @@ std::string ChooseFile() {
   while (gtk_events_pending())
     gtk_main_iteration();
 
-  return "";
+  return outPath;
 #else
   OPENFILENAME ofn;
   char fileName[MAX_PATH] = "";
