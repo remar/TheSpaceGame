@@ -58,6 +58,10 @@ void GameObject::destroy() {
   toBeDestroyed = true;
 }
 
+void GameObject::show(bool show) {
+  Cats::ShowSprite(spriteId, show);
+}
+
 void GameObject::updateGraphicsPosition() {
   Cats::SetSpritePosition(spriteId, worldX - cameraX, worldY - cameraY);
 }

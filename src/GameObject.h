@@ -24,6 +24,7 @@ public:
   void moveInDirection(float delta, float speed);
   virtual void destroy();
   bool isBeingDestroyed() { return toBeDestroyed; }
+  virtual void show(bool show);
 
 protected:
   void updateGraphicsPosition();
