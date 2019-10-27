@@ -22,14 +22,6 @@ int main(int argc, char *argv[]) {
   Cats::LoadSprite("../data/gfx/asteroid1.json");
   Cats::LoadTileset("../data/gfx/bakgrund1.json");
 
-  Cats::SetupTileLayer(2, 1, screenWidth, screenHeight);
-
-  for(int y = 0;y < 1;y++) {
-    for(int x = 0;x < 2;x++) {
-      Cats::SetTile(x, y, "bakgrund1", 0, 0);
-    }
-  }
-
   int lastFrameTime = SDL_GetTicks();
   bool running = true;
 

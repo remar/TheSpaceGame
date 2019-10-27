@@ -28,8 +28,6 @@ private:
   void CreateAsteroidAt(float x, float y, ObjectType type);
   void SetCameraPosition(float x, float y);
 
-  bool editingLevel;
-
   Spaceship *spaceship;
   float backgroundScroll;
   float levelScroll;

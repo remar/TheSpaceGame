@@ -9,17 +9,21 @@
 #include <SDL2/SDL.h>
 #include <string.h>
 #include "FileDialog.h"
+#include "EditorState.h"
 
 LevelState LevelState::instance;
 
 void LevelState::EnterState() {
-  editingLevel = false;
-
   spaceship = new Spaceship();
 
-  std::string selected_file = ChooseFile();
+  Cats::SetupTileLayer(2, 1, screenWidth, screenHeight);
 
-  std::cout << "Selected file: " << selected_file << std::endl;
+  for(int y = 0;y < 1;y++) {
+    for(int x = 0;x < 2;x++) {
+      Cats::SetTile(x, y, "bakgrund1", 0, 0);
+    }
+  }
+
 
   LoadLevel("../data/levels/" + level);
 
@@ -34,59 +38,49 @@ void LevelState::ExitState() {
 }
 
 void LevelState::Update(GameLogic *gameLogic, float delta) {
-  if(editingLevel) {
-    spaceship->show(false);
-    levelScroll += Input::instance.getDirection().x;
-    SetCameraPosition(levelScroll, 0);
-    // Do level editor stuff
-    if(Input::instance.pressed(SDLK_e)) {
-      editingLevel = false;
-      StartLevel();
-    }
-  } else {
-    // Spawn new objects
-    while(!objectQueue.empty() && objectQueue.front().x < levelScroll + rightOfScreenOffset) {
-      ObjectSpec spec = objectQueue.front();
-      std::cout << "Spawning " << spec << std::endl;
-      CreateAsteroidAt(spec.x, spec.y, spec.objectType);
-      objectQueue.pop_front();
-    }
-
-    if(Input::instance.pressed(SDLK_e)) {
-      editingLevel = true;
-    }
-
-    spaceship->setDirection(Input::instance.getDirection());
-
-    // Gfx
-    levelScroll += delta * 200;
-    SetCameraPosition(levelScroll, 0);
-
-    backgroundScroll -= delta * 150;
-    while(backgroundScroll < -screenWidth) {
-      backgroundScroll += screenWidth;
-    }
-
-    spaceship->update(delta);
-    for(auto a : asteroids) {
-      a->update(delta);
-      if(a->collides(spaceship) || a->getWorldXPosition() < levelScroll + leftOfScreenOffset) {
-	a->destroy();
-      }
-    }
-
-    auto it = asteroids.begin();
-    while(it != asteroids.end()) {
-      if((*it)->isBeingDestroyed()) {
-	std::cout << "Destroying object" << std::endl;
-	it = asteroids.erase(it);
-      } else {
-	it++;
-      }
-    }
-
-    Cats::SetScroll((int)backgroundScroll, 0);
+  // Spawn new objects
+  while(!objectQueue.empty() && objectQueue.front().x < levelScroll + rightOfScreenOffset) {
+    ObjectSpec spec = objectQueue.front();
+    std::cout << "Spawning " << spec << std::endl;
+    CreateAsteroidAt(spec.x, spec.y, spec.objectType);
+    objectQueue.pop_front();
   }
+
+  if(Input::instance.pressed(SDLK_e)) {
+    gameLogic->ChangeState(&EditorState::instance);
+    return;
+  }
+
+  spaceship->setDirection(Input::instance.getDirection());
+
+  // Gfx
+  levelScroll += delta * 200;
+  SetCameraPosition(levelScroll, 0);
+
+  backgroundScroll -= delta * 150;
+  while(backgroundScroll < -screenWidth) {
+    backgroundScroll += screenWidth;
+  }
+
+  spaceship->update(delta);
+  for(auto a : asteroids) {
+    a->update(delta);
+    if(a->collides(spaceship) || a->getWorldXPosition() < levelScroll + leftOfScreenOffset) {
+      a->destroy();
+    }
+  }
+
+  auto it = asteroids.begin();
+  while(it != asteroids.end()) {
+    if((*it)->isBeingDestroyed()) {
+      std::cout << "Destroying object" << std::endl;
+      it = asteroids.erase(it);
+    } else {
+      it++;
+    }
+  }
+
+  Cats::SetScroll((int)backgroundScroll, 0);
 }
 
 void LevelState::LoadLevel(std::string path) {
