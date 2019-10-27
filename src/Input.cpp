@@ -1,13 +1,23 @@
 #include "Input.h"
 #include <SDL2/SDL.h>
+#include <map>
 
 Input Input::instance;
+
+typedef struct
+{
+  bool pressed; /* key pressed? */
+  bool checked; /* key checked? */
+} key_type;
+
+std::map<int,key_type> keys;
 
 Input::Input() : dx(0), dy(0), quitEvent(false) {}
 
 void Input::update() {
   // iterate through events and keep track of appropriate stuff
   SDL_Event event;
+  key_type key;
   while(SDL_PollEvent(&event)) {
     if(event.type == SDL_QUIT) {
       quitEvent = true;
@@ -22,6 +32,10 @@ void Input::update() {
 	quitEvent = true;
 	break;
       }
+
+      key.pressed = true;
+      key.checked = false;
+      keys[event.key.keysym.sym] = key;
     } else if(event.type == SDL_KEYUP) {
       switch(event.key.keysym.sym) {
       case SDLK_UP:
@@ -33,6 +47,10 @@ void Input::update() {
       case SDLK_LEFT:  dx += 1; break;
       case SDLK_RIGHT: dx -= 1; break;
       }
+
+      key.pressed = false;
+      key.checked = false;
+      keys[event.key.keysym.sym] = key;
     }
   }
 }
@@ -45,4 +63,13 @@ Vector Input::getDirection() {
 
 bool Input::gotQuitEvent() {
   return quitEvent;
+}
+
+bool Input::pressed(int key) {
+  if(keys[key].pressed && !keys[key].checked) {
+    keys[key].checked = true;
+    return true;
+  }
+
+  return false;
 }

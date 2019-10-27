@@ -12,6 +12,10 @@ public:
   Vector getDirection();
   bool gotQuitEvent();
 
+  /* Checks if key has been pressed since last update (only returns
+     'true' once for each keypress) */
+  bool pressed(int key);
+
   static Input instance;
 
 private:
