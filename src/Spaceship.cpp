@@ -16,3 +16,8 @@ void Spaceship::update(float delta) {
 
   Cats::SetSpritePosition(fire, getScreenXPosition() - 60, getScreenYPosition());
 }
+
+void Spaceship::show(bool show) {
+  GameObject::show(show);
+  Cats::ShowSprite(fire, show);
+}
