@@ -1,5 +1,4 @@
 #include "Input.h"
-#include <SDL2/SDL.h>
 #include <map>
 
 Input Input::instance;
