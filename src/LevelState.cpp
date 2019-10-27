@@ -6,14 +6,18 @@
 #include <string>
 #include "Util.h"
 #include <cstring>
+#include <SDL2/SDL.h>
+#include <string.h>
+#include "FileDialog.h"
 
 LevelState LevelState::instance;
 
 void LevelState::EnterState() {
-  backgroundScroll = 0;
-  levelScroll = 0;
   spaceship = new Spaceship();
-  spaceship->setWorldPosition(screenWidth/2, screenHeight/2);
+
+  std::string selected_file = ChooseFile();
+
+  std::cout << "Selected file: " << selected_file << std::endl;
 
   LoadLevel("../data/levels/" + level);
 }
@@ -98,6 +102,10 @@ void LevelState::LoadLevel(std::string path) {
   free(jsontext);
 
   objectQueue.sort();
+
+  backgroundScroll = 0;
+  levelScroll = 0;
+  spaceship->setWorldPosition(screenWidth/2, screenHeight/2);
 }
 
 
