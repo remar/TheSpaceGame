@@ -9,7 +9,7 @@
 class GameObject {
 public:
   GameObject(std::string sprite);
-  ~GameObject() { destroy(); }
+  virtual ~GameObject() { destroy(); }
   virtual void update(float delta) = 0;
   void setBoundingRadius(float radius);
   void setWorldPosition(float worldX, float worldY);

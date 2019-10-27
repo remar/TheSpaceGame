@@ -7,6 +7,10 @@ Spaceship::Spaceship() : GameObject("rymdskepp") {
   direction.set(0, 0);
 }
 
+Spaceship::~Spaceship() {
+  Cats::RemoveSpriteInstance(fire);
+}
+
 void Spaceship::update(float delta) {
   moveInDirection(delta, 300);
 

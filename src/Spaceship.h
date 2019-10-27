@@ -8,6 +8,7 @@
 class Spaceship : public GameObject {
 public:
   Spaceship();
+  virtual ~Spaceship();
   virtual void update(float delta);
   virtual void show(bool show);
 
