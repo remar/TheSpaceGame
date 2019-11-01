@@ -1,7 +1,8 @@
 #include "Button.h"
 #include "Cats.h"
 
-Button::Button(std::string type, int x, int y) : x(x), y(y) {
+Button::Button(std::string type, int x, int y, std::function<void()> callback)
+  : x(x), y(y), callback(callback) {
   buttonId = Cats::CreateSpriteInstance("buttons");
   Cats::SetAnimation(buttonId, "unpressed");
   buttonContentId = Cats::CreateSpriteInstance("buttons");
