@@ -4,6 +4,8 @@
 #define EDITORSTATE_H
 
 #include "GameState.h"
+#include "Button.h"
+#include <vector>
 
 class EditorState : public GameState {
 public:
@@ -13,6 +15,13 @@ public:
 
   static EditorState* Instance() { return &instance; }
   static EditorState instance;
+
+private:
+  void NewLevel();
+  void OpenLevel();
+  Button *ButtonAt(int x, int y);
+  std::vector<Button *> buttons;
+  Button *buttonBeingPressed;
 };
 
 #endif

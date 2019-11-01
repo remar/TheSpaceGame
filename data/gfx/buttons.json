@@ -23,7 +23,7 @@
 	    "frames": [
 		[1, 1]
 	    ]
-	}
+	},
 	"new": {
 	    "image": {
 		"path":"buttons.png",
@@ -34,6 +34,18 @@
 	    "looping": false,
 	    "frames": [
 		[2, 1]
+	    ]
+	},
+	"open": {
+	    "image": {
+		"path":"buttons.png",
+		"width":96,
+		"height":96
+	    },
+	    "origin": [0, 0],
+	    "looping": false,
+	    "frames": [
+		[3, 1]
 	    ]
 	}
     }
