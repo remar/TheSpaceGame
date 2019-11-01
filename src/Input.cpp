@@ -72,3 +72,12 @@ bool Input::pressed(int key) {
 
   return false;
 }
+
+bool Input::released(int key) {
+  if(!keys[key].pressed && !keys[key].checked) {
+    keys[key].checked = true;
+    return true;
+  }
+
+  return false;
+}

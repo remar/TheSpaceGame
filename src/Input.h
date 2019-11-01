@@ -17,6 +17,10 @@ public:
      'true' once for each keypress) */
   bool pressed(int key);
 
+  /* Checks if key has been released since last update (only returns
+     'true' once for each keyrelease) */
+  bool released(int key);
+
   static Input instance;
 
 private:
