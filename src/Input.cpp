@@ -11,7 +11,7 @@ typedef struct
 
 std::map<int,key_type> keys;
 
-Input::Input() : dx(0), dy(0), quitEvent(false) {}
+Input::Input() : dx(0), dy(0), quitEvent(false), mouseClicked(false), mouseReleased(false), mouseMoved(false) {}
 
 void Input::update() {
   // iterate through events and keep track of appropriate stuff
@@ -50,6 +50,18 @@ void Input::update() {
       key.pressed = false;
       key.checked = false;
       keys[event.key.keysym.sym] = key;
+    } else if(event.type == SDL_MOUSEBUTTONDOWN) {
+      mouseClicked = true;
+      mouseX = event.button.x;
+      mouseY = event.button.y;
+    } else if(event.type == SDL_MOUSEBUTTONUP) {
+      mouseReleased = true;
+      mouseX = event.button.x;
+      mouseY = event.button.y;
+    } else if(event.type == SDL_MOUSEMOTION) {
+      mouseMoved = true;
+      mouseX = event.motion.x;
+      mouseY = event.motion.y;
     }
   }
 }
@@ -80,4 +92,28 @@ bool Input::released(int key) {
   }
 
   return false;
+}
+
+bool Input::mouseButtonDown(int &x, int &y) {
+  if(mouseClicked) {
+    x = mouseX;
+    y = mouseY;
+    mouseClicked = false;
+  }
+}
+
+bool Input::mouseButtonUp(int &x, int &y) {
+  if(mouseReleased) {
+    x = mouseX;
+    y = mouseY;
+    mouseReleased = false;
+  }
+}
+
+bool Input::mouseMovement(int &x, int &y) {
+  if(mouseMoved) {
+    x = mouseX;
+    y = mouseY;
+    mouseMoved = false;
+  }
 }

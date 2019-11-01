@@ -21,11 +21,30 @@ public:
      'true' once for each keyrelease) */
   bool released(int key);
 
+  /* Checks for mouse click, returns 'true' if left mouse button has
+     been pressed. Sets the x and y parameters to the position of the
+     click */
+  bool mouseButtonDown(int &x, int &y);
+
+  /* Checks for mouse release, returns 'true' if left mouse button has
+     been released. Sets the x and y parameters to the position of the
+     release */
+  bool mouseButtonUp(int &x, int &y);
+
+  /* Checks for mouse movement, returning 'true' if mouse moved since
+     last check. Sets the x and y parameters to the position of the
+     mouse */
+  bool mouseMovement(int &x, int &y);
+
   static Input instance;
 
 private:
   float dx, dy;
   bool quitEvent;
+  bool mouseClicked;
+  bool mouseReleased;
+  bool mouseMoved;
+  int mouseX, mouseY;
 };
 
 #endif
