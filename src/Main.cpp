@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
   Cats::LoadSprite("../data/gfx/rymdskepp.json");
   Cats::LoadSprite("../data/gfx/stor_eld.json");
   Cats::LoadSprite("../data/gfx/asteroid1.json");
+  Cats::LoadSprite("../data/gfx/buttons.json");
   Cats::LoadTileset("../data/gfx/bakgrund1.json");
 
   int lastFrameTime = SDL_GetTicks();

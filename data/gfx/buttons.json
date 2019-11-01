@@ -1,0 +1,40 @@
+{
+    "animations": {
+	"unpressed": {
+	    "image": {
+		"path":"buttons.png",
+		"width":96,
+		"height":96
+	    },
+	    "origin": [0, 0],
+	    "looping": false,
+	    "frames": [
+		[0, 1]
+	    ]
+	},
+	"pressed": {
+	    "image": {
+		"path":"buttons.png",
+		"width":96,
+		"height":96
+	    },
+	    "origin": [0, 0],
+	    "looping": false,
+	    "frames": [
+		[1, 1]
+	    ]
+	}
+	"new": {
+	    "image": {
+		"path":"buttons.png",
+		"width":96,
+		"height":96
+	    },
+	    "origin": [0, 0],
+	    "looping": false,
+	    "frames": [
+		[2, 1]
+	    ]
+	}
+    }
+}
