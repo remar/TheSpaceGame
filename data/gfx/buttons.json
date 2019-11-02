@@ -48,5 +48,29 @@
 		[3, 1]
 	    ]
 	}
+	"selection": {
+	    "image": {
+		"path":"buttons.png",
+		"width":96,
+		"height":96
+	    },
+	    "origin": [0, 0],
+	    "looping": false,
+	    "frames": [
+		[4, 1]
+	    ]
+	}
+	"large_asteroid": {
+	    "image": {
+		"path":"buttons.png",
+		"width":96,
+		"height":96
+	    },
+	    "origin": [0, 0],
+	    "looping": false,
+	    "frames": [
+		[5, 1]
+	    ]
+	}
     }
 }
