@@ -6,6 +6,7 @@
 #include "GameState.h"
 #include "Button.h"
 #include <vector>
+#include "ObjectSpec.h"
 
 class EditorState : public GameState {
 public:
@@ -17,11 +18,22 @@ public:
   static EditorState instance;
 
 private:
+
+  enum EditorMode {
+    SELECTION_MODE,
+    PLACEMENT_MODE
+  };
+
   void NewLevel();
   void OpenLevel();
+  void SelectionMode();
+  void SelectObject(ObjectType type);
   Button *ButtonAt(int x, int y);
   std::vector<Button *> buttons;
   Button *buttonBeingPressed;
+  EditorMode editorMode;
+  int spriteFollowingMouse;
+  ObjectType selectedObjectType;
 };
 
 #endif
