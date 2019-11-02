@@ -19,6 +19,7 @@ public:
   float getScreenXPosition() { return worldX - cameraX; }
   float getScreenYPosition() { return worldY - cameraY; }
   bool collides(const GameObject *other);
+  bool collides(float x, float y);
   void setDirection(float dx, float dy);
   void setDirection(Vector v);
   void moveInDirection(float delta, float speed);

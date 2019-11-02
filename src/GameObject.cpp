@@ -37,6 +37,10 @@ bool GameObject::collides(const GameObject *other) {
     < square(other->boundingRadius + boundingRadius);
 }
 
+bool GameObject::collides(float x, float y) {
+  return square(abs(worldX - x)) + square(abs(worldY - y)) < square(boundingRadius);
+}
+
 void GameObject::setDirection(float dx, float dy) {
   direction.set(dx, dy);
   direction.normalize();
