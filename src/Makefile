@@ -4,7 +4,7 @@ SDL2CONFIG := sdl2-config
 CATSDIR := ../../cats/cats-cpp/src
 CPPFILES := $(wildcard *.cpp)
 DEPFILES := $(patsubst %.cpp,%.d,$(CPPFILES))
-CXXFLAGS += -I${CATSDIR} ${GTK_CXXFLAGS} `$(SDL2CONFIG) --cflags` -std=c++11
+CXXFLAGS += -I${CATSDIR} ${GTK_CXXFLAGS} `$(SDL2CONFIG) --cflags` -std=c++11 -ggdb
 OFILES := $(CPPFILES:.cpp=.o)
 
 
