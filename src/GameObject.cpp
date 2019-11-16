@@ -27,7 +27,7 @@ void GameObject::setCameraPosition(float cameraX, float cameraY) {
   updateGraphicsPosition();
 }
 
-inline float square(float x) {return x*x;}
+constexpr float square(float x) {return x*x;}
 
 bool GameObject::collides(const GameObject *other) {
   // Collision if distance is less than the sum of the radii.
