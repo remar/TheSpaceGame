@@ -1,13 +1,16 @@
+#include "Asteroid.h"
+#include "Button.h"
+#include "Cats.h"
+#include "Command.h"
+#include "Constants.h"
+#include "EditorObject.h"
 #include "EditorState.h"
-#include <iostream>
 #include "FileDialog.h"
 #include "Input.h"
-#include "Cats.h"
-#include "Button.h"
-#include "Constants.h"
+#include "PlaceCommand.h"
+#include <iostream>
+#include <list>
 #include <vector>
-#include "EditorObject.h"
-#include "Asteroid.h"
 
 EditorState EditorState::instance;
 
@@ -18,7 +21,9 @@ struct ButtonSpec {
 
 int asteroid;
 
-std::vector<EditorObject> objects;
+EditorObjectStore objects;
+
+std::list<Command *> commands;
 
 void EditorState::EnterState() {
   buttonBeingPressed = nullptr;
@@ -65,16 +70,14 @@ void EditorState::Update(GameLogic *gameLogic, float delta) {
     } else {
       // Not in toolbar: interact with actual game field
       if(editorMode == EditorMode::PLACEMENT_MODE) {
-	GameObject *go = new Asteroid();
-	go->setWorldPosition(x, y);
-	objects.push_back(EditorObject(go));
+	commands.push_back(new PlaceCommand(objects, selectedObjectType, x, y));
+	commands.back()->Execute();
+	std::cout << "commands: " << commands.size() << std::endl;
       } else if(editorMode == EditorMode::SELECTION_MODE) {
-	// Check if we're on an object, and select it if so
-	for(auto eo : objects) {
-	  if(eo.heldObject->collides(x, y)) {
-	    std::cout << "Found object!" << eo.heldObject << std::endl;
-	    eo.heldObject->destroy();
-	  }
+	auto object = objects.GetObjectAt(x, y);
+	if(object != nullptr) {
+	  std::cout << "found object: " << object->objectId << std::endl;
+	  objects.Remove(object->objectId);
 	}
       }
     }

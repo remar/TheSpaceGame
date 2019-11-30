@@ -7,8 +7,12 @@
 
 class EditorObject {
 public:
-  EditorObject(GameObject *gameObject);
+  EditorObject() {}
+  EditorObject(GameObject *gameObject, int objectId = 0);
   GameObject *heldObject;
+  int objectId;
+private:
+  static int nextObjectId;
 };
 
 #endif
