@@ -28,7 +28,6 @@ void LevelState::EnterState() {
     }
   }
 
-
   LoadLevel("../data/levels/" + level);
 
   StartLevel();
@@ -119,40 +118,6 @@ void LevelState::StartLevel() {
   levelScroll = 0;
   spaceship->setWorldPosition(screenWidth/2, screenHeight/2);
   spaceship->show(true);
-}
-
-ObjectSpec LevelState::ReadObject(JsonValue value, std::string path) {
-    bool gotX = false;
-    int x = 0;
-    bool gotY = false;
-    int y = 0;
-    bool gotType = false;
-    ObjectType type = ObjectType::SMALL_ASTEROID;
-    for(auto elm : value) {
-      if(strcmp(elm->key, "x") == 0) {
-	gotX = true;
-	x = (elm->value).toNumber();
-      } else if(strcmp(elm->key, "y") == 0) {
-	gotY = true;
-	y = (elm->value).toNumber();
-      } else if(strcmp(elm->key, "type") == 0) {
-	gotType = true;
-	char *t = (elm->value).toString();
-	if(strcmp(t, "small asteroid") == 0) {
-	  type = ObjectType::SMALL_ASTEROID;
-	} else if(strcmp(t, "medium asteroid") == 0) {
-	  type = ObjectType::MEDIUM_ASTEROID;
-	} else if(strcmp(t, "large asteroid") == 0) {
-	  type = ObjectType::LARGE_ASTEROID;
-	} else if(strcmp(t, "extra life") == 0) {
-	  type = ObjectType::EXTRA_LIFE;
-	}
-      }
-    }
-    if(!gotX || !gotY || !gotType) {
-      throw std::runtime_error("Incomplete object specification in " + path);
-    }
-    return ObjectSpec(x, y, type);
 }
 
 void LevelState::CreateAsteroidAt(float x, float y, ObjectType type) {

@@ -9,7 +9,6 @@
 #include "ObjectSpec.h"
 #include "Constants.h"
 #include <list>
-#include "gason.h"
 
 class LevelState : public GameState {
 public:
@@ -24,7 +23,6 @@ public:
 private:
   void LoadLevel(std::string path);
   void StartLevel();
-  ObjectSpec ReadObject(JsonValue value, std::string path);
   void CreateAsteroidAt(float x, float y, ObjectType type);
   void SetCameraPosition(float x, float y);
 
