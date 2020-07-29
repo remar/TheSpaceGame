@@ -10,8 +10,12 @@
 #include <string.h>
 #include "FileDialog.h"
 #include "EditorState.h"
+#include "pugixml.hpp"
 
 LevelState LevelState::instance;
+
+using std::string;
+using std::cout;
 
 void LevelState::EnterState() {
   spaceship = new Spaceship();
@@ -86,33 +90,26 @@ void LevelState::Update(GameLogic *gameLogic, float delta) {
 void LevelState::LoadLevel(std::string path) {
   std::cout << "Loading level \"" << path << "\"" << std::endl;
 
-  char *jsontext = strdup(ReadFile(path).c_str());
+  pugi::xml_document doc;
+  pugi::xml_parse_result result = doc.load_file(path.c_str());
 
-  char *endptr;
-  JsonValue value;
-  JsonAllocator allocator;
-
-  if(jsonParse(jsontext, &endptr, &value, allocator) != JSON_OK) {
-    throw std::runtime_error("Unable to parse " + path);
+  if(!result) {
+    throw std::runtime_error("Unable to open " + path);
   }
-
-  JsonNode* node = value.toNode();
-
-  if(strcmp(node->key, "objects") != 0) {
-    throw std::runtime_error("Object doesn't have \"objects\" key! (" + path + ")");
-  }
-
-  value = node->value;
 
   originalObjectQueue.clear();
+  for(auto obj : doc.child("map").child("objectgroup").children("object")) {
+    int gid = obj.attribute("gid").as_int();
 
-  // Loop through the objects in the array
-  for(auto obj : value) {
-    originalObjectQueue.push_back(ReadObject(obj->value, path));
+    // TODO: Base offset on some kind of table instead, this is a hack
+    int offset = (3 - gid)*100;
+
+    int x = obj.attribute("x").as_int() + offset;
+    // origin is lower left corner for objects... hence the weird math
+    int y = obj.attribute("y").as_int() - offset;
+    cout << gid << "," << x << "," << y << ",offset:" << offset << std::endl;
+    originalObjectQueue.push_back(ObjectSpec(x, y, ObjectType::LARGE_ASTEROID));
   }
-
-  free(jsontext);
-
   originalObjectQueue.sort();
 }
 

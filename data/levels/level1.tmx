@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="10" height="1" tilewidth="1920" tileheight="1080" infinite="0" nextlayerid="3" nextobjectid="47">
+ <tileset firstgid="1" source="../objects.tsx"/>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="14" gid="1" x="4292" y="292" width="400" height="400"/>
+  <object id="15" gid="1" x="5272" y="268" width="400" height="400"/>
+  <object id="16" gid="1" x="4768" y="610" width="400" height="400"/>
+  <object id="17" gid="1" x="4116" y="1074" width="400" height="400"/>
+  <object id="18" gid="1" x="4338" y="1164" width="400" height="400"/>
+  <object id="19" gid="1" x="4578" y="1210" width="400" height="400"/>
+  <object id="20" gid="1" x="4850" y="1218" width="400" height="400"/>
+  <object id="21" gid="1" x="5174" y="1198" width="400" height="400"/>
+  <object id="22" gid="1" x="5404" y="1104" width="400" height="400"/>
+  <object id="23" gid="1" x="5618" y="986" width="400" height="400"/>
+  <object id="24" gid="1" x="6948" y="272" width="400" height="400"/>
+  <object id="25" gid="1" x="6962" y="526" width="400" height="400"/>
+  <object id="26" gid="1" x="6972" y="794" width="400" height="400"/>
+  <object id="27" gid="1" x="6974" y="1094" width="400" height="400"/>
+  <object id="28" gid="1" x="7674" y="352" width="400" height="400"/>
+  <object id="29" gid="1" x="7696" y="656" width="400" height="400"/>
+  <object id="30" gid="1" x="7676" y="1014" width="400" height="400"/>
+  <object id="31" gid="1" x="7924" y="1036" width="400" height="400"/>
+  <object id="32" gid="1" x="8722" y="368" width="400" height="400"/>
+  <object id="33" gid="1" x="8556" y="484" width="400" height="400"/>
+  <object id="34" gid="1" x="8466" y="818" width="400" height="400"/>
+  <object id="35" gid="1" x="8668" y="1078" width="400" height="400"/>
+  <object id="36" gid="1" x="8982" y="1032" width="400" height="400"/>
+  <object id="37" gid="1" x="9096" y="756" width="400" height="400"/>
+  <object id="38" gid="1" x="8950" y="506" width="400" height="400"/>
+  <object id="39" gid="1" x="9678" y="380" width="400" height="400"/>
+  <object id="40" gid="1" x="9714" y="604" width="400" height="400"/>
+  <object id="41" gid="1" x="9686" y="834" width="400" height="400"/>
+  <object id="42" gid="1" x="9704" y="1104" width="400" height="400"/>
+  <object id="43" gid="1" x="9976" y="1106" width="400" height="400"/>
+  <object id="44" gid="1" x="10142" y="1110" width="400" height="400"/>
+  <object id="45" gid="1" x="1528" y="388" width="400" height="400"/>
+  <object id="46" gid="1" x="1528" y="1084" width="400" height="400"/>
+ </objectgroup>
+</map>

@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
   GameLogic gameLogic;
 
-  LevelState::instance.SetLevel("level.json");
+  LevelState::instance.SetLevel("level1.tmx");
   gameLogic.ChangeState(&LevelState::instance);
 
   while(running) {
